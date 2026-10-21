@@ -5,31 +5,31 @@ const SERVICES = {
     ["Окрашивание в один тон", 150, 5500, "hair"],
     ["Сложное окрашивание (airtouch, балаяж)", 300, 12000, "hair"],
     ["Укладка", 45, 1800, "hair"],
-    ["Уход «Восстановление»", 90, 3200, "hair"]
+    ["Уход для волос «Восстановление»", 90, 3200, "hair"]
   ],
   "Ногти": [
     ["Маникюр с покрытием", 120, 2400, "nails"],
     ["Маникюр без покрытия", 60, 1500, "nails"],
     ["Педикюр с покрытием", 90, 3000, "nails"],
-    ["Снятие и укрепление", 45, 1000, "nails"]
+    ["Снятие покрытия и укрепление ногтей", 45, 1000, "nails"]
   ],
   "Брови и ресницы": [
     ["Коррекция и окрашивание бровей", 45, 1500, "brows"],
     ["Ламинирование бровей", 60, 2400, "brows"],
     ["Ламинирование ресниц", 75, 3200, "brows"],
-    ["Наращивание ресниц, классика", 120, 3800, "brows"]
+    ["Наращивание ресниц, классический объём", 120, 3800, "brows"]
   ],
   "Лицо": [
     ["Чистка лица", 75, 4000, "face"],
-    ["Уходовая процедура по типу кожи", 60, 3500, "face"],
+    ["Уход за лицом по типу кожи", 60, 3500, "face"],
     ["Массаж лица", 45, 2800, "face"]
   ]
 };
 const MASTERS = [
   {id:"alina", name:"Алина Громова", role:"Стилист-колорист", exp:"9 лет", skill:["hair"], g:"linear-gradient(135deg,#F4C9E2,#CDBDF2,#F4C9E2)"},
-  {id:"timur", name:"Тимур Алиев", role:"Стилист, мужские и женские стрижки", exp:"6 лет", skill:["hair"], g:"linear-gradient(135deg,#BFE3EE,#CDBDF2,#BFE3EE)"},
-  {id:"maria", name:"Мария Ким", role:"Мастер ногтевого сервиса", exp:"7 лет", skill:["nails"], g:"linear-gradient(135deg,#F7D6C9,#F4C9E2,#F7D6C9)"},
-  {id:"darya", name:"Дарья Леви", role:"Бровист и лэш-мастер", exp:"5 лет", skill:["brows"], g:"linear-gradient(135deg,#CDBDF2,#BFE3EE,#CDBDF2)"},
+  {id:"timur", name:"Тимур Алиев", role:"Стилист-парикмахер", exp:"6 лет", skill:["hair"], g:"linear-gradient(135deg,#BFE3EE,#CDBDF2,#BFE3EE)"},
+  {id:"maria", name:"Мария Ким", role:"Мастер маникюра и педикюра", exp:"7 лет", skill:["nails"], g:"linear-gradient(135deg,#F7D6C9,#F4C9E2,#F7D6C9)"},
+  {id:"darya", name:"Дарья Леви", role:"Мастер по бровям и ресницам", exp:"5 лет", skill:["brows"], g:"linear-gradient(135deg,#CDBDF2,#BFE3EE,#CDBDF2)"},
   {id:"elena", name:"Елена Рахимова", role:"Косметолог-эстетист", exp:"11 лет", skill:["face"], g:"linear-gradient(135deg,#C9EBD9,#BFE3EE,#C9EBD9)"}
 ];
 const money = n => n.toLocaleString("ru-RU").replace(/ /g," ") + " ₽";
@@ -96,16 +96,16 @@ function render(){
   if(step === 1){
     const list = MASTERS.filter(m => m.skill.includes(pick.service.kind));
     html += `<h3>К кому записаться?</h3><div class="opts">
-      <button class="opt" data-m="any" aria-pressed="${!pick.master}"><span>Любой свободный мастер</span><span>быстрее всего</span></button>` +
+      <button class="opt" data-m="any" aria-pressed="${!pick.master}"><span>Любой свободный мастер</span><span>ближайшее время</span></button>` +
       list.map(m => `<button class="opt" data-m="${m.id}" aria-pressed="${pick.master?.id===m.id}"><span>${m.name}</span><span>${m.role.split(",")[0]}</span></button>`).join("") + `</div>`;
   }
   if(step === 2){
     html += `<h3>Когда удобно?</h3><div class="days">` + days.map((d,i) => `<button class="day" data-d="${i}" aria-pressed="${pick.day===i}"><small>${dayName(d)}</small><b>${d.getDate()}</b></button>`).join("") + `</div>`;
-    html += pick.day === null ? `<p class="note">Выберите день, и появятся свободные часы.</p>` :
+    html += pick.day === null ? `<p class="note">Выберите день, чтобы увидеть свободные часы.</p>` :
       `<div class="slots">` + slots(days[pick.day]).map(s => `<button class="slot" data-t="${s.h}" ${s.off?"disabled":""} aria-pressed="${pick.time===s.h}">${s.h}:00</button>`).join("") + `</div>`;
   }
   if(step === 3){
-    html += `<h3>Последний шаг</h3>
+    html += `<h3>Проверьте запись и оставьте контакты</h3>
       <div class="sum">
         <div><span>Услуга</span><span>${pick.service.name}</span></div>
         <div><span>Мастер</span><span>${pick.master ? pick.master.name : "любой свободный"}</span></div>
@@ -141,7 +141,7 @@ function done(){
   panel.innerHTML = `<div class="done">
     <div class="tick"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#241838" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16l6 6 12-13"/></svg></div>
     <h3>${pick.name}, вы записаны</h3>
-    <p class="lead" style="margin:.6rem auto 1.4rem">${pick.service.name}, ${dayFull(days[pick.day])}, в ${pick.time}:00. ${pick.master ? "Мастер: " + pick.master.name + "." : "Мастера подберём и скажем при звонке."}</p>
+    <p class="lead" style="margin:.6rem auto 1.4rem">${pick.service.name}, ${dayFull(days[pick.day])}, в ${pick.time}:00. ${pick.master ? "Мастер: " + pick.master.name + "." : "Мастера подберём и назовём по телефону."}</p>
     <p class="note">Это демо: запись нигде не сохранена.</p>
     <button class="btn btn--ghost" id="again" style="margin-top:1rem">Записаться ещё</button></div>`;
   $("#again").onclick = () => { Object.assign(pick,{service:null,master:null,day:null,time:null}); step = 0; render(); };
