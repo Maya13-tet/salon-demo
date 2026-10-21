@@ -154,4 +154,6 @@ mir.addEventListener("pointermove", e => {
   const r = mir.getBoundingClientRect();
   mir.style.setProperty("--x", ((e.clientX-r.left)/r.width*100)+"%");
   mir.style.setProperty("--y", ((e.clientY-r.top)/r.height*100)+"%");
+  mir.style.setProperty("--px", (-((e.clientX-r.left)/r.width-.5)*14)+"px");
+  mir.style.setProperty("--py", (-((e.clientY-r.top)/r.height-.5)*14)+"px");
 });

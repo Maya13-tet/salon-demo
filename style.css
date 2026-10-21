@@ -43,11 +43,15 @@ section{padding:clamp(3.5rem,9vw,7rem) 0}
 .hero .lead{margin-bottom:2rem}
 .hero .acts{display:flex;gap:.8rem;flex-wrap:wrap}
 .mirror{position:relative;aspect-ratio:4/5.4;border-radius:999px 999px 1.2rem 1.2rem;background:var(--pearl);background-size:300% 300%;animation:drift 14s ease-in-out infinite;overflow:hidden;--x:50%;--y:30%;box-shadow:0 0 0 .6rem var(--haze),0 0 0 calc(.6rem + 1.5px) var(--night)}
-.mirror::before{content:"";position:absolute;inset:0;background:radial-gradient(circle 11rem at var(--x) var(--y),rgba(255,255,255,.85),rgba(255,255,255,0) 70%);transition:background .08s}
-.mirror svg{position:absolute;inset:0;width:100%;height:100%}
-.mirror figcaption{position:absolute;left:0;right:0;bottom:1.2rem;text-align:center;font-size:.85rem;color:var(--night);opacity:.7}
+.mirror__img{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;object-position:60% 30%;animation:breathe 18s ease-in-out infinite alternate;transform:translate(var(--px,0),var(--py,0)) scale(1.04);transition:transform .4s ease-out}
+.mirror::before{z-index:1;mix-blend-mode:soft-light;content:"";position:absolute;inset:0;background:radial-gradient(circle 11rem at var(--x) var(--y),rgba(255,255,255,.85),rgba(255,255,255,0) 70%);transition:background .08s}
+.stage{position:relative}
+.dot{position:absolute;left:-14%;bottom:7%;width:34%;aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 0 0 .45rem var(--haze),0 0 0 calc(.45rem + 1.5px) var(--night);animation:bob 7s ease-in-out infinite}
+.dot img{width:100%;height:100%;object-fit:cover}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-.8rem)}}
+@keyframes breathe{from{scale:1}to{scale:1.07}}
 @keyframes drift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}.mirror{max-width:20rem;margin:0 auto;order:-1;aspect-ratio:4/4.4}}
+@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}.stage{width:100%;max-width:20rem;margin:0 auto;order:-1;padding-left:2rem}.mirror{aspect-ratio:4/4.8}.dot{left:-.5rem}}
 
 /* услуги */
 .tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin:2rem 0 1.5rem}
