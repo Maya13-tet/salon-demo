@@ -134,3 +134,11 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--lilac);f
   .word span{transform:none}
   html{scroll-behavior:auto}
 }
+
+/* заголовки и подводки по центру */
+h1,h2{text-align:center}
+.lead{margin-left:auto;margin-right:auto;text-align:center}
+.hero .wrap>div:first-child{text-align:center}
+.hero .word{justify-content:center}
+.hero .acts{justify-content:center}
+.tabs{justify-content:center}
